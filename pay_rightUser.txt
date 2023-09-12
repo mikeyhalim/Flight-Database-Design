@@ -1,0 +1,48 @@
+# Two users in two terminals; one books a flight and the other user attempts
+# to pay for it, but there is not enough money
+#
+# Annotation for test harness; it's ok to dump errors to stdout
+#   public_test_case
+#
+# commands:
+create user2 user2 100
+login user2 user2
+search "Seattle WA" "San Francisco CA" 1 1 1
+book 0
+quit
+*
+#
+# expected output:
+Created user user2
+Logged in as user2
+Itinerary 0: 1 flight(s), 110 minutes
+ID: 467612 Day: 1 Carrier: UA Number: 239 Origin: Seattle WA Dest: San Francisco CA Duration: 110 Capacity: 4 Price: 502
+Booked flight(s), reservation ID: 1
+Goodbye
+|
+Created user user2
+Logged in as user2
+Itinerary 0: 1 flight(s), 110 minutes
+ID: 467612 Day: 1 Carrier: UA Number: 239 Origin: Seattle WA Dest: San Francisco CA Duration: 110 Capacity: 4 Price: 502
+Booked flight(s), reservation ID: 1
+Goodbye
+*
+#
+##################### Terminal 2: #####################
+#
+# commands:
+login user2 user2
+pay 1
+quit
+*
+#
+# expected output:
+Logged in as user2
+Cannot find unpaid reservation 1 under user: user2
+Goodbye
+|
+Created user user1
+Logged in as user1
+User has only 100 in account but itinerary costs 502
+Goodbye
+*

@@ -1,0 +1,16 @@
+# Tag for test harness; it's allowed to print failures to stdout:
+#   public_test_case
+#
+# commands to execute:
+create user4 user4 100000
+login user4 user4
+pay 2
+quit
+*
+#
+# expected output:
+Created user user4
+Logged in as user4
+Cannot find unpaid reservation 2 under user: user4
+Goodbye
+*

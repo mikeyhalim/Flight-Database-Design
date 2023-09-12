@@ -1,0 +1,12 @@
+# Test harness annotation; it's allowed to print failures to stdout:
+#   public_test_case
+#
+# commands to execute:
+create meow CHICKEN 0
+quit
+*
+#
+# expected output:
+Created user meow
+Goodbye
+*

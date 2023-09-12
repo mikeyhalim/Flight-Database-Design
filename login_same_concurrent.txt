@@ -1,0 +1,38 @@
+# Create and login the same users
+#
+# Annotation for test harness; it's ok to dump errors to stdout
+#   public_test_case
+#
+# commands:
+create user1 user1 100
+login user1 user1
+quit
+*
+#
+# expected ouptut:
+Created user user1
+Logged in as user1
+Goodbye
+|
+Failed to create user
+Logged in as user1
+Goodbye
+*
+#
+##################### Terminal #2: #####################
+#
+# commands:
+create user1 user1 10000
+login user1 user1
+quit
+*
+#
+# expected output:
+Failed to create user
+Logged in as user1
+Goodbye
+|
+Created user user1
+Logged in as user1
+Goodbye
+*

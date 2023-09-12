@@ -1,0 +1,107 @@
+# Try to check reservations from user booking on same day.
+#
+# Annotation for test harness, telling it that it's ok to output errors:
+#   public_test_case
+#
+# commands for user1 to execute:
+create user1 user1 10000
+login user1 user1
+search "Los Angeles CA" "Seattle WA" 1 8 1
+book 0
+reservations
+quit
+*
+#
+# one of several expected outputs from user1's commands:
+Failed to create user
+Logged in as user1
+Itinerary 0: 1 flight(s), 138 minutes
+ID: 476421 Day: 8 Carrier: UA Number: 474 Origin: Los Angeles CA Dest: Seattle WA Duration: 138 Capacity: 17 Price: 390
+Booked flight(s), reservation ID: 1
+Reservation 1 paid: false:
+ID: 476421 Day: 8 Carrier: UA Number: 474 Origin: Los Angeles CA Dest: Seattle WA Duration: 138 Capacity: 17 Price: 390
+Goodbye
+|
+#
+# another possible output from user1:
+Created user user1
+Logged in as user1
+Itinerary 0: 1 flight(s), 138 minutes
+ID: 476421 Day: 8 Carrier: UA Number: 474 Origin: Los Angeles CA Dest: Seattle WA Duration: 138 Capacity: 17 Price: 390
+Booked flight(s), reservation ID: 1
+Reservation 1 paid: false:
+ID: 476421 Day: 8 Carrier: UA Number: 474 Origin: Los Angeles CA Dest: Seattle WA Duration: 138 Capacity: 17 Price: 390
+Goodbye
+|
+#
+# another possible output from user1:
+Failed to create user
+Logged in as user1
+Itinerary 0: 1 flight(s), 138 minutes
+ID: 476421 Day: 8 Carrier: UA Number: 474 Origin: Los Angeles CA Dest: Seattle WA Duration: 138 Capacity: 17 Price: 390
+You cannot book two flights in the same day
+Reservation 1 paid: false:
+ID: 635399 Day: 2 Carrier: AA Number: 134 Origin: Miami FL Dest: Seattle WA Duration: 390 Capacity: 16 Price: 654
+Goodbye
+|
+#
+# another possible output from user1:
+Created user user1
+Logged in as user1
+Itinerary 0: 1 flight(s), 138 minutes
+ID: 476421 Day: 8 Carrier: UA Number: 474 Origin: Los Angeles CA Dest: Seattle WA Duration: 138 Capacity: 17 Price: 390
+You cannot book two flights in the same day
+Reservation 1 paid: false:
+ID: 635399 Day: 2 Carrier: AA Number: 134 Origin: Miami FL Dest: Seattle WA Duration: 390 Capacity: 16 Price: 654
+Goodbye
+*
+#
+##################### Concurrently executed commands: #####################
+#
+# commands for user1 to execute in a different terminal:
+create user1 user1 10000
+login user1 user1
+search "Kahului HI" "Los Angeles CA" 0 8 1
+book 0
+reservations
+quit
+*
+#
+Created user user1
+Logged in as user1
+Itinerary 0: 1 flight(s), 280 minutes
+ID: 887207 Day: 8 Carrier: HA Number: 56 Origin: Kahului HI Dest: Los Angeles CA Duration: 280 Capacity: 16 Price: 296
+You cannot book two flights in the same day
+Reservation 1 paid: false:
+ID: 476421 Day: 8 Carrier: UA Number: 474 Origin: Los Angeles CA Dest: Seattle WA Duration: 138 Capacity: 17 Price: 390
+Goodbye
+#
+# another possible output from user1:
+|
+Failed to create user
+Logged in as user1
+Itinerary 0: 1 flight(s), 280 minutes
+ID: 887207 Day: 8 Carrier: HA Number: 56 Origin: Kahului HI Dest: Los Angeles CA Duration: 280 Capacity: 16 Price: 296
+You cannot book two flights in the same day
+Reservation 1 paid: false:
+ID: 476421 Day: 8 Carrier: UA Number: 474 Origin: Los Angeles CA Dest: Seattle WA Duration: 138 Capacity: 17 Price: 390
+Goodbye
+|
+Created user user1
+Logged in as user1
+Itinerary 0: 1 flight(s), 280 minutes
+ID: 887207 Day: 8 Carrier: HA Number: 56 Origin: Kahului HI Dest: Los Angeles CA Duration: 280 Capacity: 16 Price: 296
+Booked flight(s), reservation ID: 1
+Reservation 1 paid: false:
+ID: 887207 Day: 8 Carrier: HA Number: 56 Origin: Kahului HI Dest: Los Angeles CA Duration: 280 Capacity: 16 Price: 296
+Goodbye
+|
+Failed to create user
+Logged in as user1
+Itinerary 0: 1 flight(s), 280 minutes
+ID: 887207 Day: 8 Carrier: HA Number: 56 Origin: Kahului HI Dest: Los Angeles CA Duration: 280 Capacity: 16 Price: 296
+Booked flight(s), reservation ID: 1
+Reservation 1 paid: false:
+ID: 887207 Day: 8 Carrier: HA Number: 56 Origin: Kahului HI Dest: Los Angeles CA Duration: 280 Capacity: 16 Price: 296
+Goodbye
+*

@@ -1,0 +1,12 @@
+# Tag for test harness; can print failures to stdout:
+#   public_test_case
+#
+# commands:
+search "Seattle WA" "Vancouver, BC" 1 1 1
+quit
+*
+#
+# expected command output:
+No flights match your selection
+Goodbye
+*
